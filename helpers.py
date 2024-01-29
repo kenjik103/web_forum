@@ -39,8 +39,7 @@ class DataBase:
     
     def select_priority_from_db(self, command, priority):
         cur = self.conn.cursor()
-        cur.execute(command, priority)
-
+        cur.execute(command, (priority,))
         rows = cur.fetchall()
         return rows
 

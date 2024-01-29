@@ -15,6 +15,12 @@
         <div class="mb-3">
             <input class="form-control mx-auto w-auto" id="password" name="confirmation" placeholder="Re-type Password" type="password">
         </div>
+        <div class="radio">
+            <input class = "radio__input" type="radio" value = "student" name="registerRadio" id = "radio1" checked="checked">
+            <label class = "radio__lable" for="radio1">Student</label>
+            <input class = "radio__input" type="radio" value = "teacher" name="registerRadio" id = "radio2">
+            <label class = "radio__lable" for="radio1">Teacher</label>
+        </div>
         <button class="btn btn-primary" type="submit">Register</button>
     </form>
 {% endblock %}

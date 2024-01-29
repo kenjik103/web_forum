@@ -40,19 +40,20 @@ def login():
 
     if request.method == "POST":
         if not request.form.get("username"):
-            return render_template("/login.html")
+            return redirect("/login")
 
         elif not request.form.get("password"):
-            return render_template("/login.html")
+            return redirect("/login")
 
-        rows = db.select_priority_from_db("SELECT * FROM users WHERE username = (?)", (request.form.get("username",)))
+        rows = db.select_priority_from_db("SELECT * FROM users WHERE username = (?);", request.form.get("username"))
 
-        if rows == None or not check_password_hash(
-            rows[0][PASSWORD], request.form.get("password")
-        ):
-            render_template("/login.html")
+        print(rows)
+
+        if not rows:
+            return redirect("/login")
 
         session["user_id"] = rows[0][ID]
+
         return redirect("/")
     else:
         return render_template("/login.html")
@@ -65,6 +66,7 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
+        user_type = request.form.get("registerRadio")
 
         if not username:
             return render_template("/register.html")
@@ -81,8 +83,18 @@ def register():
             if username in row:
                 return render_template("/register.html")
 
-        db.insert_into_db("INSERT INTO users (username, password) VALUES (?, ?);", (username, generate_password_hash(password)))
+        db.insert_into_db("INSERT INTO users (username, password, user_type) VALUES (?, ?, ?);", (username, generate_password_hash(password), user_type))
 
         return redirect("/")
     else:
         return render_template("/register.html")
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
