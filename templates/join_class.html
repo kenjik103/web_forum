@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Join Class
+{% endblock %}
+
+{% block main %}
+    <form action="/join_class" method="post">
+        <div class="form-group">
+            <label for="class_code">Class Code</label>
+            <input type="class_code" class="form-control" id="class_code" name = "class_code" placeholder="Code">
+        </div>
+    </form>
+{% endblock %}

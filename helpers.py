@@ -3,7 +3,6 @@ import sqlite3
 import csv
 import datetime
 from typing import Any
-import pytz
 import requests
 import subprocess
 import urllib
@@ -11,6 +10,8 @@ import uuid
 
 from flask import redirect, render_template, session
 from functools import wraps
+
+from random import randint
 
 def login_required(f):
     """
@@ -24,6 +25,18 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+
+def class_code_generator(user_id):
+    """ Generates unique class id based off user_id"""
+    i = user_id
+    num_places = 1
+    while i > 0:
+        i //= 10
+        num_places *= 10
+        
+    random_integer = randint(1000, 9999)
+    return random_integer * num_places + user_id
+
 
 class DataBase:
     def __init__(self, file_path):

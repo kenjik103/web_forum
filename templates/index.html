@@ -5,5 +5,21 @@
 {% endblock %}
 
 {% block main %}
-    <div> Home </div>
+    <div class="row">
+      {% for class in classes %}
+        <div class="col-sm-3">
+          <div class="card">
+              <img class="card-img-top" src="https://picsum.photos/500" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">{{ class[2] }}</h5>
+                <p class="card-text">{{ class[3] }}</p>
+                <form action="/course" method="post">
+                  <input type = "hidden" name = "code" value = "{{ class[1] }}"/>
+                  <button class="btn btn-primary" type="submit" value="Submit"> Enter </button>
+                </form>
+              </div>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
 {% endblock %}

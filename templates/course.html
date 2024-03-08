@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Course
+{% endblock %}
+
+{% block main %}
+<div class="container">
+  <div class="row g-2">
+    <div class="col-12">
+      <h1 class="display-1">{{ current_class[0][0] }}</h1>
+      <h3>{{ code }}</h3>
+      <p>{{ current_class[0][1] }} </p>
+    </div>
+  </div>
+
+  <div class="row g-2">
+    <div class="col-12">
+      <section class="bg-light">
+        <div class="container">
+          <div class="text-center">
+            <h1 class = "display-5">Create Post</h1>
+            <p class="lead">Got a question? Post it!</p>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+              <button class="btn btn-primary" data-bs-toggle="modal"
+              data-bs-target="#reg-modal">
+                Create Post
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    {% for post in discussion %}
+      <div class="col-6">
+        <div class="card">
+            <h4 class="card-header" style="text-align: left;">{{ post[0] }} says:</h3>
+            <h5 class = "card-title" style="text-align: left;">{{ post[1] }}</h4>
+            <p class="card-body" style="text-align: left;">{{ post[2] }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <form action="/course" method="post">
+    <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-title">Create a Post</h5>
+            <button type = "button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Cloase"></button>
+          </div>
+          <div class="modal-body">
+            <lable for="modal-post" class="form-lable">Title:</lable>
+            <input type="text" class="form-control" id="modal-post" name="post_title">
+            <lable for="modal-post" class="form-lable">Body:</lable>
+            <textarea type="text" class="form-control" id="modal-post" name="post_body"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+</div>
+{% endblock %}

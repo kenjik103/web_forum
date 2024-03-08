@@ -2,7 +2,7 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import login_required, DataBase
+from helpers import login_required, class_code_generator, DataBase
 
 app = Flask(__name__)
 
@@ -16,6 +16,7 @@ db = DataBase("forum.db")
 ID = 0
 USERNAME = 1
 PASSWORD = 2
+USER_TYPE = 3
 
 @app.after_request
 def after_request(response):
@@ -28,14 +29,14 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    return render_template("/index.html")
+    classes = db.select_priority_from_db("SELECT * FROM classes WHERE user_id = (?);", session["user_id"])
+    session["current_class"] = None
+    return render_template("/index.html", classes=classes)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    """Log user in"""
-
-    # Forget any user_id
+    # Forget any user info
     session.clear()
 
     if request.method == "POST":
@@ -47,12 +48,13 @@ def login():
 
         rows = db.select_priority_from_db("SELECT * FROM users WHERE username = (?);", request.form.get("username"))
 
-        print(rows)
-
-        if not rows:
+        if len(rows) != 1 or not check_password_hash(
+            rows[0][PASSWORD], request.form.get("password")
+        ):
             return redirect("/login")
 
         session["user_id"] = rows[0][ID]
+        session["user_type"] = rows[0][USER_TYPE]
 
         return redirect("/")
     else:
@@ -62,6 +64,7 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -91,10 +94,67 @@ def register():
 
 @app.route("/logout")
 def logout():
-    """Log user out"""
 
     # Forget any user_id
     session.clear()
 
     # Redirect user to login form
     return redirect("/")
+
+@app.route("/create_class", methods=["GET", "POST"])
+def create_class():
+    if request.method == "POST":
+        class_name = request.form.get("class_name")
+        class_description = request.form.get("class_description")
+        class_code = class_code_generator(session["user_id"])
+
+        db.insert_into_db("INSERT INTO classes (user_id, class_code, class_name, class_description) VALUES (?, ?, ?, ?);", (session["user_id"], class_code, class_name, class_description))
+
+        return redirect("/")
+    
+    else:
+        return render_template("/create_class.html")
+    
+
+@app.route("/join_class", methods=["GET", "POST"])
+def join_class():
+    if request.method == "POST":
+        code = request.form.get("class_code")
+        if code == None:
+            return redirect("/")
+
+        class_info = db.select_priority_from_db("SELECT class_name, class_description FROM classes WHERE class_code = (?);", code)
+        print(class_info)
+        print(len(class_info))
+        if len(class_info) < 2:
+            class_name = class_info[0][0]
+            class_description = class_info[0][1]
+            
+            db.insert_into_db("INSERT INTO classes (user_id, class_code, class_name, class_description) VALUES (?, ?, ?, ?);", (session["user_id"], code, class_name, class_description))
+        return redirect("/")
+    else:
+        return render_template("/join_class.html")
+    
+@app.route("/course", methods=["GET", "POST"])
+def class_index():
+    if request.method == "POST":
+        code = request.form.get("code")
+        if code:
+            session["current_class"] = code
+            
+        post_title = request.form.get("post_title")
+        post_body = request.form.get("post_body")
+
+        if post_title:
+            db.insert_into_db("INSERT INTO discussion (user_id, class_code, post_title, post_body) VALUES (?, ?, ?, ?);", (session["user_id"], session["current_class"], post_title, post_body))
+
+        return redirect("/course")
+    else:
+        code = session["current_class"]
+        current_class = db.select_priority_from_db("SELECT class_name, class_description FROM classes WHERE class_code = (?);", session["current_class"])
+        discussion = db.select_priority_from_db("SELECT username, post_title, post_body FROM discussion JOIN users ON user_id = users.id WHERE class_code = (?) ORDER BY post_title ASC;", session["current_class"])
+        return render_template("/course.html", discussion=discussion, current_class=current_class, code=code)
+
+    
+if __name__ == "__main__":
+    app.run(port=8000, debug=True)

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create Class
+{% endblock %}
+
+{% block main %}
+    <form action="/create_class" method="post">
+        <div class="form-group">
+            <label for="class_name">Class Name</label>
+            <input type="class_name" class="form-control" id="class_name" name = "class_name" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label for="class_description">Class Description</label>
+            <textarea type ="class_description" class="form-control" id="class_description" name = "class_description" rows="3" placeholder="Description"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+{% endblock %}
