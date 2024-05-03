@@ -12,6 +12,7 @@ from flask import redirect, render_template, session
 from functools import wraps
 
 from random import randint
+from datetime import datetime
 
 def login_required(f):
     """
@@ -37,6 +38,11 @@ def class_code_generator(user_id):
     random_integer = randint(1000, 9999)
     return random_integer * num_places + user_id
 
+def get_datetime():
+    """ returns date and time as a tuple(date, time)"""
+    now = datetime.now()
+    return (now.strftime("%m/%d/%Y"), now.strftime("%H:%M:%S"))
+    
 
 class DataBase:
     def __init__(self, file_path):
@@ -52,11 +58,16 @@ class DataBase:
     
     def select_priority_from_db(self, command, priority):
         cur = self.conn.cursor()
-        cur.execute(command, (priority,))
+        cur.execute(command, priority)
         rows = cur.fetchall()
         return rows
 
     def insert_into_db(self, command, task):
         cur = self.conn.cursor()
         cur.execute(command, task)
+        self.conn.commit()
+
+    def delete_from_db(self, command, priority):
+        cur = self.conn.cursor()
+        cur.execute(command, priority)
         self.conn.commit()
