@@ -1,0 +1,276 @@
+//custom variables
+$primary: #082f49;
+$primary1: #e0f2fe;
+$primary-font: Verdana, sans-serif;
+
+$light: #ffffff;
+
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+body{
+    font: $primary-font;
+    font-size: 18px;
+    color: #020617;
+}
+
+button:hover{
+    background-color: #082f49c2;
+}
+
+.navbar{
+    border-bottom: solid 1px #e5e5e5;
+    height: 60px;
+    background-image: linear-gradient(to right, white, $primary1);
+}
+
+.nav-links {
+    width: 90%;
+    margin: auto;
+}
+
+.nav-link{
+    position:relative;
+    top: -10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 20px;
+    float: right;
+}
+
+.navbar-brand{
+    position:absolute;
+    top: 5px;
+    font-size: 25px;
+    font-weight: 555;
+}
+
+.login-text {
+    display: block;
+    font-size: 2em;
+    margin-top: 0.60em;
+    margin-bottom: 0.60em;
+    font-weight: bold;
+}
+
+.login-subtext{
+    display:block;
+    text-align: left;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    margin-left: 10px;
+    font-size: 0.75em;
+}
+
+.login-input {
+    width: 322px;
+    background-color: transparent;
+    border: none;
+    padding: 7px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid $primary;
+}
+
+input,
+input::placeholder{
+    font-size: 15px;
+}
+
+.register-rerout {
+    position:relative; top:140px
+}
+
+.redirect-text, .redirect-link{
+    font-size: 15px;
+    margin-bottom: 0.2em;
+}
+.submit-button{
+    background-color: $primary;
+    border: none;
+    color: white;
+    padding: 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 200;
+    width:350px;
+    border-radius: 100px;
+}
+
+.radio-tile-group{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.input-container{
+    position: relative;
+    top: -12px;
+    height: 7rem;
+    width: 7rem;
+    margin: 0.75rem;
+}
+
+.input-container input {
+    position:absolute;
+    height:100%;
+    width: 100%;
+    margin:0;
+    cursor: pointer;
+    z-index: 2;
+    opacity: 0;
+}
+
+.input-container .radio-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 75%;
+    border: 2px solid $primary;
+    border-radius: 8px;
+    transition: all 300ms ease;
+}
+
+.input-container i{
+    color: $primary;
+    font-size: 1.5rem;
+}
+
+.input-container label{
+    color: $primary;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+input:checked + .radio-tile {
+    background-color: $primary;
+    box-shadow: 0 0 12px $primary
+}
+
+input:hover + .radio-tile{
+    box-shadow: 0 0 12px $primary;
+}
+
+input:checked + .radio-tile i,
+input:checked + .radio-tile label{
+    color: white;
+}
+
+#register-button{
+    position:relative; top:-25px;
+}
+
+.login-background {
+    position:fixed;
+    inset: 0px;
+    margin:auto;
+    justify-content: center; 
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    height:550px;
+    background-image: linear-gradient(to bottom right, white, $primary1);
+    border: solid 1px #e5e5e5;
+}
+
+.no-class-container{
+    margin: auto; 
+    position: relative;
+    top: 175px;
+    width: 500px;
+    height: 300px;
+    background-image: linear-gradient(to bottom right, $primary1, white);
+    border-radius: 70px;
+    border: solid 1px #e5e5e5;
+}
+
+.no-class-title{
+    margin: 35px;
+    font-weight: 400;
+}
+
+.no-class-body{
+    margin: 35px;
+    font-weight: 300;
+}
+
+.bi-hurricane{
+    margin: 3px;
+    position: relative;
+    font-size: 25px;
+    top: 4px;
+}
+
+.create-class-background{
+    margin: auto;
+    width: 30em; 
+    height: 39em;
+    border: solid 1px black;
+    background-image: linear-gradient(to bottom right, $primary1, white);
+    border-radius: 70px;
+}
+
+.class-name, .class-description{
+    position: relative;
+    left: 10%;
+    margin: 15px;
+    width: 75%;
+}
+
+.class-description{
+    height: 100px;
+    resize: none;
+}
+
+.create-class-subtext{
+    position: relative;
+    top: 3px;
+    left: 10%;
+    margin: 15px;
+    font-size: 17px;
+
+}
+
+#create-class-submit-button{
+    position: relative;
+    width: 50%;
+    top: 5%;
+}
+
+.responsive-img{
+    margin: 0 auto;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.bg-image-tile-group{
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 70%;
+    height: 40%;
+}
+
+.bg-tile{
+    
+    text-align: center;
+
+}
+
+#bg-image-tile-group{
+    margin:0;
+    height: 15em;
+    width: 75%
+}
+
+#img-container{
+    margin:0;
+    width: 40%;
+    height: 50%;
+}

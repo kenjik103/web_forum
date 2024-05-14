@@ -6,14 +6,44 @@
 
 {% block main %}
     <form action="/create_class" method="post">
-        <div class="form-group">
-            <label for="class_name">Class Name</label>
-            <input type="class_name" class="form-control" id="class_name" name = "class_name" placeholder="Name">
-          </div>
-          <div class="form-group">
-            <label for="class_description">Class Description</label>
-            <textarea type ="class_description" class="form-control" id="class_description" name = "class_description" rows="3" placeholder="Description"></textarea>
-          </div>
-          <button class="btn btn-primary" type="submit">Create</button>
+      <h1>Create Class</h1>
+        <div class="create-class-background">
+            <label class = "login-subtext create-class-subtext" for="class-name">Class Name</label>
+            <input type="class-name" class="form-control class-name" id="class-name" name = "class-name" placeholder="Name">
+            <label class = "login-subtext create-class-subtext" for="class-description">Class Description</label>
+            <textarea type ="class-description" class="form-control class-description" id="class-description" name = "class-description" rows="3" placeholder="Description"></textarea>
+            <p class="login-subtext create-class-subtext">Background Image</p>
+            <div class = "bg-image-tile-group">
+                <div id = "img-container">
+                    <input type="radio" value = "static/img/bg_img_1.jpg" name="radio" id = "image1" checked>
+                    <img class = "responsive-img" src="static/img/bg_img_1.jpg" alt="Colored Pencil Background" width="150" height = "100">
+                    <div class="bg-tile">
+                        <label for="bg-tile "></label>
+                    </div>
+                </div>
+                <div id = "img-container">
+                    <input type="radio" value = "static/img/bg_img_2.jpeg" name="radio" id = "image2">
+                    <img class = "responsive-img"  src="static/img/bg_img_2.jpeg" alt="Book Stack Background" width="150" height = "100">
+                    <div class="bg-tile">
+                        <label for="bg-tile radio-tile"></label>
+                    </div>
+                </div>
+                <div id = "img-container">
+                    <input type="radio" value = "static/img/bg_img_3.jpeg" name="radio" id = "image3">
+                    <img class = "responsive-img" src="static/img/bg_img_3.jpeg" alt="School Bus Background" width="150" height = "100">
+                    <div class="bg-tile">
+                        <label for="image3"></label>
+                    </div>
+                </div>
+                <div id = "img-container">
+                    <input type="radio" value = "static/img/bg_img_4.jpeg" name="radio" id = "image4">
+                    <img class = "responsive-img" src="static/img/bg_img_4.jpeg" alt="Puzzle Background" width="150" height = "100">
+                    <div class="bg-tile">
+                        <label for="image4"></label>
+                    </div>
+                </div>
+            </div>
+            <button class="submit-button" id="create-class-submit-button" type="submit">Create</button>
+         </div>
     </form>
 {% endblock %}

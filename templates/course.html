@@ -6,7 +6,7 @@
 
 {% block main %}
 <div class="container">
-  <div class="row g-2">
+  <div class="title-card row g-2">
     <div class="col-12">
       <h1 class="display-1">{{ current_class[0][0] }}</h1>
       <h3>{{ code }}</h3>
@@ -63,9 +63,9 @@
           </div>
           <div class="modal-body">
             <lable for="modal-post" class="form-lable">Title:</lable>
-            <input type="text" class="form-control" id="modal-post" name="post_title">
+            <input type="text" class="form-control" id="modal-post" name="post-title">
             <lable for="modal-post" class="form-lable">Body:</lable>
-            <textarea type="text" class="form-control" id="modal-post" name="post_body"></textarea>
+            <textarea type="text" class="form-control" id="modal-post" name="post-body"></textarea>
           </div>
           <div class="modal-footer">
             <button class="btn btn-primary">Submit</button>

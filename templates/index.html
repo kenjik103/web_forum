@@ -6,10 +6,32 @@
 
 {% block main %}
     <div class="row">
+      {% if classes[0] == null and user_type == "teacher"%}
+        <div class="no-class-container">
+            <h1 class="no-class-title">
+                So empty...
+            </h1>
+            <p class = "no-class-body">Need to create a class? Generate a class-code here and share it with yor students</p>
+            <a href="/create_class">
+              <button class="submit-button">Create Class</button>
+            </a>
+        </div>
+      {% endif %}
+      {% if classes[0] == null and user_type == "student"%}
+        <div class="no-class-container">
+            <h1 class="no-class-title">
+                So empty...
+            </h1>
+            <p class = "no-class-body">Need to join a class? Request a code from your teacher and enter it here</p>
+            <a href="/join_class">
+              <button class="submit-button">Join Class</button>
+            </a>
+        </div>
+      {% endif %}
       {% for class in classes %}
         <div class="col-sm-3">
           <div class="card">
-              <img class="card-img-top" src="https://picsum.photos/500" alt="Card image cap">
+              <img class="card-img-top" src="{{class[4]}}"  width = "500" height = "250"alt="Card image cap">
               <div class="card-body">
                 <h5 class="card-title">{{ class[2] }}</h5>
                 <p class="card-text">{{ class[3] }}</p>
@@ -18,7 +40,7 @@
                   <button class="btn btn-primary" type="submit" value="Submit"> Enter </button>
                 </form>
                 <form action="/" method="post">
-                  <button type="submit" class="btn btn-link" name="leave_class_code" value = "{{ class[1] }}">Leave Class</button>
+                  <button type="submit" class="btn btn-link" name="leave-class-code" value = "{{ class[1] }}">Leave Class</button>
                 </form>
               </div>
             </div>

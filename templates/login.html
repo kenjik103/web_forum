@@ -5,13 +5,24 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/login" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+    <div class = "login-background">
+        <h1 class = "login-text">Login</h1>
+        <form action="/login" method="post">
+            <div class="mb-3">
+                <label class = "login-subtext" for="username">Username</label>
+                <i class="bi bi-person-lock"></i>
+                <input autocomplete="off" autofocus class="login-input" id="username" name="username" placeholder = "Type your username" type="text">
+            </div>
+            <div class="mb-3">
+                <label class = "login-subtext" for="password">Password</label>
+                <i class="bi bi-key"></i>
+                <input class="login-input" id="password" name="password" placeholder="Type your password" type="password">
+            </div>
+            <button class="submit-button" type="submit">Log In</button>
+        </form>
+        <div class = "register-rerout">
+            <p class ="redirect-text">Need an account?</p>
+            <a class = "redirect-link" href="/register">Register here</a>
         </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">Log In</button>
-    </form>
+    </div>
 {% endblock %}

@@ -5,22 +5,41 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/register" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="confirmation" placeholder="Re-type Password" type="password">
-        </div>
-        <div class="radio">
-            <input class = "radio__input" type="radio" value = "student" name="registerRadio" id = "radio1" checked="checked">
-            <label class = "radio__lable" for="radio1">Student</label>
-            <input class = "radio__input" type="radio" value = "teacher" name="registerRadio" id = "radio2">
-            <label class = "radio__lable" for="radio1">Teacher</label>
-        </div>
-        <button class="btn btn-primary" type="submit">Register</button>
-    </form>
+    <div class = "login-background">
+        <h1 class="login-text">Register</h1>
+        <form action="/register" method="post">
+            <div class="mb-3">
+                <lable class="login-subtext" for="username">Username</lable>
+                <i class="bi bi-person-lock"></i>
+                <input autocomplete="off" autofocus class="login-input" id="username" name="username" placeholder="Type your username" type="text">
+            </div>
+            <div class="mb-3">
+                <lable class="login-subtext" for="password">Password</lable>
+                <i class="bi bi-key"></i>
+                <input class="login-input" id="password" name="password" placeholder="Type your password" type="password">
+            </div>
+            <div class="mb-3">
+                <lable class="login-subtext" for="confirmation">Confirm Password</lable>
+                <i class="bi bi-check2-all"></i>
+                <input class="login-input" id="password" name="confirmation" placeholder="Please re-type password" type="password">
+            </div>
+            <div class="radio-tile-group">
+                <div class="input-container">
+                    <input type="radio" value = "student" name="radio" id = "student">
+                    <div class="radio-tile">
+                        <i class="bi bi-pencil-fill"></i> 
+                        <label for="student">Student</label>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <input type="radio" value = "teacher" name="radio" id = "teacher">
+                    <div class="radio-tile">
+                        <i class="bi bi-eyeglasses"></i>
+                        <label for="teacher">Teacher</label>
+                    </div>
+                </div>
+            </div>
+            <button id = "register-button" class="submit-button" type="submit">Register</button>
+        </form>
+    </div>
 {% endblock %}

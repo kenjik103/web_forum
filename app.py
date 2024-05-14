@@ -31,14 +31,13 @@ def after_request(response):
 def index():
     """leave class feture"""
     if request.method == "POST":
-        code = request.form.get("leave_class_code")
+        code = request.form.get("leave-class-code")
         print(code)
         db.delete_from_db("DELETE FROM classes WHERE user_id = (?) AND class_code = (?);", (session["user_id"], code))
         return redirect("/")
     else:
         classes = db.select_priority_from_db("SELECT * FROM classes WHERE user_id = (?);", (session["user_id"], ))
-        session["current_class"] = None
-        return render_template("/index.html", classes=classes)
+        return render_template("/index.html", classes=classes,  user_type = session["user_type"])
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -76,7 +75,7 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
-        user_type = request.form.get("registerRadio")
+        user_type = request.form.get("radio")
 
         if not username:
             return render_template("/register.html")
@@ -109,13 +108,15 @@ def logout():
     return redirect("/")
 
 @app.route("/create_class", methods=["GET", "POST"])
+@login_required
 def create_class():
     if request.method == "POST":
-        class_name = request.form.get("class_name")
-        class_description = request.form.get("class_description")
+        class_name = request.form.get("class-name")
+        class_description = request.form.get("class-description")
         class_code = class_code_generator(session["user_id"])
+        bg_img = request.form.get('radio')
 
-        db.insert_into_db("INSERT INTO classes (user_id, class_code, class_name, class_description) VALUES (?, ?, ?, ?);", (session["user_id"], class_code, class_name, class_description))
+        db.insert_into_db("INSERT INTO classes (user_id, class_code, class_name, class_description, bg_img) VALUES (?, ?, ?, ?, ?);", (session["user_id"], class_code, class_name, class_description, bg_img))
 
         return redirect("/")
     
@@ -124,29 +125,32 @@ def create_class():
     
 
 @app.route("/join_class", methods=["GET", "POST"])
+@login_required
 def join_class():
     if request.method == "POST":
-        code = request.form.get("class_code")
+        code = request.form.get("class-code")
 
         if code == None:
             return redirect("/")
 
-        class_info = db.select_priority_from_db("SELECT class_name, class_description FROM classes WHERE class_code = (?);", (code, ))
-        user_classes = db.select_priority_from_db("SELECT class_name, class_description FROM classes WHERE user_id = (?);", (session["user_id"],))
+        class_info = db.select_priority_from_db("SELECT class_name, class_description, bg_img FROM classes WHERE class_code = (?);", (code, ))
+        user_classes = db.select_priority_from_db("SELECT class_name, class_description, bg_img FROM classes WHERE user_id = (?);", (session["user_id"],))
 
-        if class_info == None:
+        if len(class_info) == 0:
             return redirect("/")
 
         if class_info[0] not in user_classes:
             class_name = class_info[0][0]
             class_description = class_info[0][1]
+            bg_img = class_info[0][2]
             
-            db.insert_into_db("INSERT INTO classes (user_id, class_code, class_name, class_description) VALUES (?, ?, ?, ?);", (session["user_id"], code, class_name, class_description))
+            db.insert_into_db("INSERT INTO classes (user_id, class_code, class_name, class_description, bg_img) VALUES (?, ?, ?, ?, ?);", (session["user_id"], code, class_name, class_description, bg_img))
         return redirect("/")
     else:
         return render_template("/join_class.html")
     
 @app.route("/course", methods=["GET", "POST"])
+@login_required
 def class_index():
     if request.method == "POST":
         code = request.form.get("code")
