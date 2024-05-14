@@ -1,0 +1,9 @@
+/.venv
+/flask_session
+/node_modules
+/__pycache__
+.DS_Store
+*.pyc
+*.pyo
+package-lock.json
+package.json
