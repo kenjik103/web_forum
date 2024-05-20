@@ -161,8 +161,8 @@ def class_index():
         if code:
             session["current_class"] = code
             
-        post_title = request.form.get("post_title")
-        post_body = request.form.get("post_body")
+        post_title = request.form.get("post-title")
+        post_body = request.form.get("post-body")
 
         if post_title:
             db.insert_into_db("INSERT INTO discussion (user_id, class_code, post_title, post_body, date, time) VALUES (?, ?, ?, ?, ?, ?);", (session["user_id"], session["current_class"], post_title, post_body, date, time))
@@ -171,7 +171,7 @@ def class_index():
     else:
         code = session["current_class"]
         current_class = db.select_priority_from_db("SELECT class_name, class_description FROM classes WHERE class_code = (?);", (session["current_class"],))
-        discussion = db.select_priority_from_db("SELECT username, post_title, post_body, date, time FROM discussion JOIN users ON user_id = users.id WHERE class_code = (?) ORDER BY date, time ;", (session["current_class"],))
+        discussion = db.select_priority_from_db("SELECT username, post_title, post_body, date, time FROM discussion JOIN users ON user_id = users.id WHERE class_code = (?) ORDER BY date, time DESC;", (session["current_class"],))
         return render_template("/course.html", discussion=discussion, current_class=current_class, code=code)
 
     

@@ -5,51 +5,35 @@
 {% endblock %}
 
 {% block main %}
-<div class="container">
-  <div class="title-card row g-2">
-    <div class="col-12">
-      <h1 class="display-1">{{ current_class[0][0] }}</h1>
-      <h3>{{ code }}</h3>
-      <p>{{ current_class[0][1] }} </p>
-    </div>
+<div class="course-header">
+  <div class="course-title">
+      <h3 class = "code">Code:</h3>
+      <h3 class = "class-code">{{ code }}</h3>
+      <h1 class="class-title">{{ current_class[0][0] }}</h1>
+      <p class = "class-description">{{ current_class[0][1] }} </p>
   </div>
 
-  <div class="row g-2">
-    <div class="col-12">
-      <section class="bg-light">
-        <div class="container">
-          <div class="text-center">
-            <h1 class = "display-5">Create Post</h1>
-            <p class="lead">Got a question? Post it!</p>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
-              <button class="btn btn-primary" data-bs-toggle="modal"
-              data-bs-target="#reg-modal">
-                Create Post
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div class="course-subtext">
+        <h1 class = "create-post">Create Post</h1>
+          <p class="create-post-subtext">Got a question? Post it!</p>
+        <button class="create-post-button" data-bs-toggle="modal" data-bs-target="#reg-modal">Create Post </button>
     </div>
-
+</div> 
     {% for post in discussion %}
-      <div class="col-6">
-        <div class="card">
-            <div class="card-header">
-              <div style="float: left;">
-                <h4 style="text-align: left; margin: 0;">{{ post[0] }} says:</h4>
-              </div>
-              <div style="float:right;"><p style="text-align: right; font-size: 14px; margin: 0;">{{ post[3] }} {{ post[4] }}</p>
-              </div>     
+      <div class="row">
+        <div class="query">
+            <div class="query-header">
+                <h4 class = "username">{{ post[0] }} says:</h4>
+                <h5 class = "post-title">{{ post[1] }}</h4>
+                <p class = "timestamp">{{ post[3] }} {{ post[4] }}</p>
+            </div>     
+            <div class = "query-body">
+             
+              <p class="post-body">{{ post[2] }}</p>
             </div>
-            <h5 class = "card-title" style="text-align: left;">{{ post[1] }}</h4>
-            <p class="card-body" style="text-align: left;">{{ post[2] }}</p>
         </div>
       </div>
     {% endfor %}
-  </div>
 
   <form action="/course" method="post">
     <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title"

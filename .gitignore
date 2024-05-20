@@ -7,3 +7,4 @@
 *.pyo
 package-lock.json
 package.json
+/distlib

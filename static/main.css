@@ -12234,4 +12234,146 @@ input:checked + .radio-tile label {
   margin: 0;
   width: 40%;
   height: 50%;
+}
+
+.query {
+  background-color: #f1f5f9;
+  width: 90%;
+  display: inline-block;
+  border-radius: 10px;
+  margin: 20px auto;
+}
+
+.query-header {
+  width: 95%;
+  margin: auto;
+  height: 90px;
+}
+
+.query-body {
+  margin: auto;
+  width: 95%;
+}
+
+.username {
+  text-align: left;
+  position: relative;
+  top: 18px;
+}
+
+.timestamp {
+  text-align: right;
+  position: relative;
+  top: -48px;
+}
+
+.post-title {
+  text-align: left;
+  position: relative;
+  top: 10px;
+  color: #64748b;
+  font-weight: 350;
+}
+
+.post-body {
+  text-align: left;
+}
+
+.course-header {
+  border-radius: 20px;
+  margin: auto;
+  position: relative;
+  top: -25px;
+  width: 101%;
+  padding: 20px;
+}
+
+.course-title {
+  height: 30%;
+}
+
+.class-title {
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.code {
+  font-size: 20px;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+}
+
+.class-code {
+  font-size: 20px;
+  font-weight: 500;
+  color: #38bdf8;
+  display: inline-block;
+  text-align: center;
+}
+
+.class-description {
+  position: relative;
+  left: 170px;
+  font-size: 20px;
+  height: 75%;
+  text-align: center;
+}
+
+.course-subtext {
+  border: solid 1px #94a3b8;
+  width: 40%;
+  border-radius: 20px;
+  margin: auto;
+}
+
+.create-post {
+  margin-top: 10px;
+  font-size: 35px;
+  font-weight: 500;
+}
+
+.create-post-button {
+  background-color: #082f49;
+  border: none;
+  color: white;
+  padding: 7px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 200;
+  width: 60%;
+  border-radius: 100px;
+  margin-bottom: 15px;
+}
+
+.class-code-subtext {
+  margin-bottom: 5px;
+  font-size: 17px;
+  font-weight: 300;
+  position: relative;
+  top: -5px;
+}
+
+#join-class-background {
+  margin-top: 10em;
+  margin-bottom: 0;
+  height: 170px;
+}
+
+#join-class-button {
+  position: relative;
+  top: 22px;
+  width: 10em;
+}
+
+@media only screen and (max-width: 768px) {
+  .course-subtext {
+    width: 100%;
+  }
+  .nav-link {
+    margin: 5px;
+    margin-top: 20px;
+  }
 }/*# sourceMappingURL=main.css.map */

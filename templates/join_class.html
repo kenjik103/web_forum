@@ -6,9 +6,10 @@
 
 {% block main %}
     <form action="/join_class" method="post">
-        <div class="form-group">
-            <label for="class-code">Class Code</label>
+        <div class="login-background" id="join-class-background">
+            <label class = "class-code-subtext" for="class-code">Class Code</label>
             <input type="class-code" class="form-control" id="class-code" name = "class-code" placeholder="Code">
+            <button class="submit-button" id = "join-class-button">Enter Code</button>
         </div>
     </form>
 {% endblock %}
