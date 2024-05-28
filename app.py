@@ -3,6 +3,7 @@ from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import login_required, class_code_generator, get_datetime, DataBase
+import os
 
 app = Flask(__name__)
 
@@ -13,10 +14,6 @@ Session(app)
 db = DataBase("forum.db")
 
 # represents constants location in db tuple
-ID = 0
-USERNAME = 1
-PASSWORD = 2
-USER_TYPE = 3
 
 @app.after_request
 def after_request(response):
@@ -29,10 +26,9 @@ def after_request(response):
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    """leave class feture"""
+    """leave class feature"""
     if request.method == "POST":
         code = request.form.get("leave-class-code")
-        print(code)
         db.delete_from_db("DELETE FROM classes WHERE user_id = (?) AND class_code = (?);", (session["user_id"], code))
         return redirect("/")
     else:
@@ -55,12 +51,12 @@ def login():
         rows = db.select_priority_from_db("SELECT * FROM users WHERE username = (?);", (request.form.get("username"), ))
 
         if len(rows) != 1 or not check_password_hash(
-            rows[0][PASSWORD], request.form.get("password")
+            rows[0][2], request.form.get("password")
         ):
             return redirect("/login")
 
-        session["user_id"] = rows[0][ID]
-        session["user_type"] = rows[0][USER_TYPE]
+        session["user_id"] = rows[0][0]
+        session["user_type"] = rows[0][3]
 
         return redirect("/")
     else:
@@ -153,27 +149,33 @@ def join_class():
 @login_required
 def class_index():
     if request.method == "POST":
+        post_type = request.form.get("post-button")
         code = request.form.get("code")
         date_time = get_datetime()
         date = date_time[0]
         time = date_time[1]
- 
+
         if code:
             session["current_class"] = code
-            
-        post_title = request.form.get("post-title")
+
         post_body = request.form.get("post-body")
-
-        if post_title:
-            db.insert_into_db("INSERT INTO discussion (user_id, class_code, post_title, post_body, date, time) VALUES (?, ?, ?, ?, ?, ?);", (session["user_id"], session["current_class"], post_title, post_body, date, time))
-
+        if post_type == "main":
+            post_title = request.form.get("post-title")
+            if post_title:
+                db.insert_into_db("INSERT INTO discussion (user_id, class_code, post_title, post_body, date, time) VALUES (?, ?, ?, ?, ?, ?);", (session["user_id"], session["current_class"], post_title, post_body, date, time))
+        elif post_type == "reply":
+            corresponding_id = request.form.get("post-id")
+            if post_body:
+                db.insert_into_db("INSERT INTO replys (corresponding_post_id, user_id, class_code, post_body, date, time) VALUES (?, ?, ?, ?, ?, ?);", (corresponding_id, session["user_id"], session["current_class"], post_body, date, time))
         return redirect("/course")
     else:
-        code = session["current_class"]
         current_class = db.select_priority_from_db("SELECT class_name, class_description FROM classes WHERE class_code = (?);", (session["current_class"],))
-        discussion = db.select_priority_from_db("SELECT username, post_title, post_body, date, time FROM discussion JOIN users ON user_id = users.id WHERE class_code = (?) ORDER BY date, time DESC;", (session["current_class"],))
-        return render_template("/course.html", discussion=discussion, current_class=current_class, code=code)
+        discussion = db.select_priority_from_db("SELECT username, post_title, post_body, date, time, post_id FROM discussion JOIN users ON user_id = users.id WHERE class_code = (?) ORDER BY date DESC, time DESC;", (session["current_class"],))
+        reply_map = {}
+        for post in discussion:
+            replys = db.select_priority_from_db("SELECT username, post_body, date, time FROM replys JOIN users ON user_id = users.id WHERE class_code = ? AND corresponding_post_id = ? ORDER BY date ASC, time ASC;", (session["current_class"], post[5]))
+            reply_map[post[5]] = replys
+        return render_template("/course.html", discussion=discussion, current_class=current_class, code=session["current_class"], reply_map=reply_map)
 
-    
-if __name__ == "__main__":
-    app.run(port=8000, debug=True)
+if __name__ == '__main__':
+    app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))

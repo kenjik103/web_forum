@@ -12313,7 +12313,7 @@ input:checked + .radio-tile label {
   text-align: center;
 }
 
-.class-description {
+.discussion-class-description {
   position: relative;
   left: 170px;
   font-size: 20px;
@@ -12366,6 +12366,114 @@ input:checked + .radio-tile label {
   position: relative;
   top: 22px;
   width: 10em;
+}
+
+#reply-textbox-div {
+  border: solid 1px #e5e5e5;
+  margin: auto;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 20px;
+  display: grid;
+  width: 95%;
+  padding: 0;
+}
+
+#reply-textbox:focus {
+  outline: none;
+}
+
+#reply-textbox {
+  text-align: left;
+  margin-top: 0px;
+  margin-left: 15px;
+  margin-bottom: -13px;
+  display: block;
+  width: 95%;
+  overflow: hidden;
+  resize: none;
+  height: 80%;
+  line-height: 20px;
+  border: none;
+  grid-column: 1;
+  grid-row: 1;
+  padding: 5px;
+  padding-right: 10px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+#reply-button {
+  display: none;
+  background-color: #082f49;
+  padding: 0;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 200;
+  font-size: 16px;
+  grid-column: 1;
+  grid-row: 2;
+  width: 70px;
+  height: 34px;
+  position: relative;
+  margin-left: auto;
+  margin-right: 0;
+  position: relative;
+  left: -10px;
+  top: -5px;
+}
+
+#reply-textbox:not(:-moz-placeholder-shown) ~ #reply-button {
+  display: block;
+}
+
+#reply-textbox:not(:placeholder-shown) ~ #reply-button {
+  display: block;
+}
+
+#reply-container {
+  background-color: white;
+  margin-top: -5px;
+  border: 1px solid #d4d4d8;
+  width: 90%;
+  position: relative;
+}
+
+#reply-header {
+  margin-top: 0;
+  height: 40px;
+  padding: 0;
+}
+
+#reply-username {
+  position: relative;
+  top: 0px;
+}
+
+#reply-timestamp {
+  position: relative;
+  top: -35px;
+}
+
+#reply-body {
+  margin-top: -5px;
+  margin-bottom: 3px;
+}
+
+#link-btn {
+  background: none;
+  margin: -4px;
+  border: none;
+  color: #1a0dab;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.demo-container {
+  position: relative;
+  top: 250px;
 }
 
 @media only screen and (max-width: 768px) {

@@ -10,7 +10,7 @@
       <h3 class = "code">Code:</h3>
       <h3 class = "class-code">{{ code }}</h3>
       <h1 class="class-title">{{ current_class[0][0] }}</h1>
-      <p class = "class-description">{{ current_class[0][1] }} </p>
+      <p class = "disscussion-class-description">{{ current_class[0][1] }} </p>
   </div>
 
     <div class="course-subtext">
@@ -31,9 +31,28 @@
              
               <p class="post-body">{{ post[2] }}</p>
             </div>
+            <form name="reply-form" action="/course" method = "post">
+              <input type="hidden" name="post-id" id="post-id" value="{{ post[5] }}">
+              <div id="reply-textbox-div">
+                <textarea type="text" id = "reply-textbox" name = "post-body" placeholder="Reply"></textarea>
+                <button type = "submit" id="reply-button" name = "post-button" value="reply">Reply</button>
+              </div>
+            </form>
         </div>
       </div>
+      {% for reply in reply_map[post[5]] %}
+      <div class = "query" id = "reply-container">
+          <div class="query-header" id="reply-header">
+              <h4 class="username" id="reply-username">{{ reply[0] }}:</h4>
+              <p class="timestamp" id="reply-timestamp">{{ reply[2]}} {{reply[3]}}</p>
+          </div>
+          <div class="query-body">
+            <p class="post-body" id = "reply-body">{{reply[1]}}</p>
+          </div>
+      </div>
+      {% endfor %}
     {% endfor %}
+
 
   <form action="/course" method="post">
     <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title"
@@ -47,12 +66,12 @@
           </div>
           <div class="modal-body">
             <lable for="modal-post" class="form-lable">Title:</lable>
-            <input type="text" class="form-control" id="modal-post" name="post-title">
+            <input type="text" class="form-control"  name="post-title">
             <lable for="modal-post" class="form-lable">Body:</lable>
             <textarea type="text" class="form-control" id="modal-post" name="post-body"></textarea>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" name="post-button" type="submit" value="main">Submit</button>
           </div>
         </div>
       </div>
